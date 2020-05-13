@@ -43,7 +43,6 @@ app.use(flash());
 app.use('/', indexRouter);
 
 app.all('*', (req, res, next) => {
-  console.error(req.url, error);
   res.send('404 Not Found.');
 });
 

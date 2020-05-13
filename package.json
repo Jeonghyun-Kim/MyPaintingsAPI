@@ -4,7 +4,8 @@
   "description": "api server using express.js",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app"
+    "start": "nodemon app",
+    "test": "node ./app"
   },
   "author": "Kay Kim",
   "license": "MIT",
