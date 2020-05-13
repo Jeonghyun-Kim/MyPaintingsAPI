@@ -11,6 +11,7 @@ const { sequelize } = require('./models');
 // const passportConfig = require('./passport');
 
 const indexRouter = require('./routes/index');
+const winston = require('./winston_config')
 
 const app = express();
 
@@ -54,5 +55,5 @@ app.use((err, req, res) => {
 });
 
 app.listen(app.get('port'), () => {
-  console.log('Server listening at port', app.get('port'));
+  winton.info(`Server listening on port ${app.get('port')}`);
 });
