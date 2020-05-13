@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "admin",
+    "password": "k1j2h3426812",
+    "database": "mypaintingsdb_dev",
+    "host": "mypaintingsdb-1.cgfwtvjibn7m.ap-northeast-2.rds.amazonaws.com",
+    "dialect": "mariadb"
+  },
+  "test": {
+    "username": "admin",
+    "password": "k1j2h3426812",
+    "database": "mypaintingsdb_test",
+    "host": "mypaintingsdb-1.cgfwtvjibn7m.ap-northeast-2.rds.amazonaws.com",
+    "dialect": "mariadb"
+  },
+  "production": {
+    "username": "admin",
+    "password": "k1j2h3426812",
+    "database": "mypaintingsdb_pdc",
+    "host": "mypaintingsdb-1.cgfwtvjibn7m.ap-northeast-2.rds.amazonaws.com",
+    "dialect": "mariadb"
+  }
+}
