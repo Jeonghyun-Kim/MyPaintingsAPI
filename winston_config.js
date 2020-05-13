@@ -18,7 +18,7 @@ const options = {
     maxFiles: 5,
     colorize: false,
     format: combine(
-      label({ label: 'winston-test' }),
+      label({ label: 'WST' }),
       timestamp(),
       myFormat
     )
@@ -30,7 +30,7 @@ const options = {
     json: false,
     colorize: true,
     format: combine(
-      label({ label: 'nba_express' }),
+      label({ label: 'WINSTON' }),
       timestamp(),
       myFormat
     )
