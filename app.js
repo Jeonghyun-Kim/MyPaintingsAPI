@@ -14,13 +14,6 @@ const indexRouter = require('./routes/index');
 
 const app = express();
 
-const React = require('react');
-require('babel-register')({
-  presets: [ 'react' ]
-});
-const ReactDomServer = require('react-dom/server');
-// const About = React.createFactory(require('./components/about.jsx'));
-
 sequelize.sync();
 // passportConfig(passport);
 
