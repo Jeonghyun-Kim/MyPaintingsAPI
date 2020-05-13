@@ -6,7 +6,7 @@ require('babel-register')({
   presets: [ 'react' ]
 });
 const ReactDomServer = require('react-dom/server');
-const About = React.createFactory(require('../components/about.jsx'));
+const About = require('../components/about');
 
 router.get('/', (req, res, next) => {
   res.send('Hello');
