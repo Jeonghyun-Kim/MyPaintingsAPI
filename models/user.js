@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true
     },
     profile_msg: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING(100),
       allowNull: true
     }
   }, {
