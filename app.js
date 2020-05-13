@@ -55,5 +55,5 @@ app.use((err, req, res) => {
 });
 
 app.listen(app.get('port'), () => {
-  winton.info(`Server listening on port ${app.get('port')}`);
+  winston.info(`Server listening on port ${app.get('port')}`);
 });
