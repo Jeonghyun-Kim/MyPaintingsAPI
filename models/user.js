@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     gender: {
       type: DataTypes.BOOLEAN,
-      allowNull: true
+      allowNull: false
     },
     num_fans: {
       type: DataTypes.INTEGER.UNSIGNED,
