@@ -35,11 +35,6 @@ module.exports = (sequelize, DataTypes) => {
     profile_msg: {
       type: DataTypes.STRING(100),
       allowNull: true
-    },
-    view: {
-      type: DataTypes.INTEGER.UNSIGNED,
-      allowNull: false,
-      defaultValue: 0
     }
   }, {
     timestamps: true,
