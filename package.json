@@ -1,13 +1,17 @@
 {
   "name": "db_server",
   "version": "0.0.1",
-  "description": "api server using express.js",
-  "main": "app.js",
+  "description": "API Server for MyPaintings App",
+  "main": "server.js",
   "scripts": {
-    "start": "nodemon app",
-    "test": "node ./app"
+    "start": "nodemon ./server",
+    "test": "node ./server"
   },
-  "author": "Kay Kim",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jeonghyun-Kim/MyPaintingsAPI.git"
+  },
+  "author": "Kay Kim <kim.kay@kakao.com> (https://github.com/Jeonghyun-Kim)",
   "license": "MIT",
   "dependencies": {
     "app-root-path": "^3.0.0",
