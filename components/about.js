@@ -1,11 +1,14 @@
 const React = require('react');
 
-module.exports = About = () => {
+const About = () => {
   return (
     <div>
       <h1>Hello World!</h1>
       <div>This Page is for supporting APIs </div>
       <div>for MyPaintings APP</div>
+      <p>this is inside of p tag</p>
     </div>
   );
-}
+};
+
+module.exports = About;
