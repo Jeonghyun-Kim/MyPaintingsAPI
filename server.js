@@ -11,6 +11,7 @@ const { sequelize } = require('./models');
 // const passportConfig = require('./passport');
 
 const indexRouter = require('./routes/index');
+const userRouter = require('./routes/user')
 const winston = require('./winston_config')
 
 const app = express();
@@ -42,6 +43,7 @@ app.use(flash());
 
 // app.use('/auth', authRouter);
 app.use('/', indexRouter);
+app.use('/user', userRouter);
 
 app.all('*', (req, res, next) => {
   res.status(404).send('404 Not Found.');

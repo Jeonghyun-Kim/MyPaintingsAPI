@@ -11,10 +11,6 @@ const ReactDomServer = require('react-dom/server');
 const About = require('../components/about');
 
 router.get('/', (req, res, next) => {
-  res.send('Hello');
-});
-
-router.get('/about', (req, res, next) => {
   const aboutHTML = ReactDomServer.renderToString(About());
   res.send(aboutHTML);
 });
