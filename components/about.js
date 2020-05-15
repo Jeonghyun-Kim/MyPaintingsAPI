@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 
 const About = () => {
   return (
@@ -11,4 +11,8 @@ const About = () => {
   );
 };
 
+<<<<<<< HEAD:components/about.js
 module.exports = About;
+=======
+export default About
+>>>>>>> d137ee83f568571cec1d9d7fda6a61a5951a8f5f:components/about.js
