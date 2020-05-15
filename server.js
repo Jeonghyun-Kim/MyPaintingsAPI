@@ -4,15 +4,14 @@ const morgan = require('morgan');
 const path = require('path');
 const session = require('express-session');
 const flash = require('connect-flash');
+const winston = require('./winston_config');
 // const passport = require('passport');
 require('dotenv').config();
 
 const { sequelize } = require('./models');
 // const passportConfig = require('./passport');
 
-const indexRouter = require('./routes/index');
-const userRouter = require('./routes/user')
-const winston = require('./winston_config')
+const Router = require('./routes/index');
 
 const app = express();
 
@@ -42,11 +41,10 @@ app.use(flash());
 // app.use(passport.sessiong());
 
 // app.use('/auth', authRouter);
-app.use('/', indexRouter);
-app.use('/user', userRouter);
+app.use('/', Router);
 
 app.all('*', (req, res, next) => {
-  res.status(404).send('404 Not Found.');
+  res.status(404).send('404 Page Not Found.');
 });
 
 app.use((err, req, res) => {
