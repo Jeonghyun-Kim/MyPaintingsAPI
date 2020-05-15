@@ -3,7 +3,10 @@ module.exports = (sequelize, DataTypes) => {
     username: {
       type: DataTypes.STRING(20),
       allowNull: false,
-      unique: true
+      unique: true,
+      validate: {
+        is: /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/i
+      }
     },
     name: {
       type: DataTypes.STRING(30),
