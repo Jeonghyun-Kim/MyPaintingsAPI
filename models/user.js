@@ -1,14 +1,18 @@
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define('user', {
-    name: {
+    username: {
       type: DataTypes.STRING(20),
       allowNull: false,
       unique: true
     },
-    grade: {
+    name: {
+      type: DataTypes.STRING(30),
+      allowNull: false,
+    },
+    level: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
-      defaultValue: 5
+      defaultValue: 0
     },
     email: {
       type: DataTypes.STRING(30),

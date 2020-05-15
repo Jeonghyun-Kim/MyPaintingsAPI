@@ -6,7 +6,8 @@ const _ = require('lodash');
 const jsonParser = require('body-parser').json();
 const { HTTP_STATUS_CODE, DB_STATUS_CODE } = require('../status_code');
 const winston = require('../winston_config');
-const { sendResponse } = require('../utils');
+const { sendResponse, checkSuccess, doDBWork } = require('../utils');
+const { getUser, setUser } = require('../database/db_user');
 
 // const React = require('react');
 // require('babel-register')({
@@ -32,5 +33,17 @@ router.route('/')
     sendResponse(res, HTTP_STATUS_CODE.OK, { error: DB_STATUS_CODE.OK, version: version });
   }
 );
+
+router.route('/user')
+  .get((req, res, next) => {
+    doDBWork(req, res, next, getUser);
+  }, (req, res, next) => {
+    checkSuccess(res, next);
+  })
+  .post((req, res, next) => {
+    doDBWork(req, res, next, setUser);
+  }, (req, res, next) => {
+    checkSuccess(res, next, HTTP_STATUS_CODE.CREATED);
+  })
 
 module.exports = router;
