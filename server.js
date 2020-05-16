@@ -50,6 +50,7 @@ app.all('*', (req, res, next) => {
 });
 
 app.use((err, req, res) => {
+  winston.err(err.statck);
   res.locals.message = err.message;
   res.locals.error = res.app.get('env') === 'development' ? err : {};
   res.status(err.status || 500);

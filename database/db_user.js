@@ -13,10 +13,8 @@ const getUser = async (req, res, next) => {
       attributes: ['username', 'name', 'level', 'num_fans', 'profile_pic_src', 'profile_msg'],
       where: { username: req.body.username }
     });
-    user.error = DB_STATUS_CODE.OK;
-    return res.status(HTTP_STATUS_CODE.OK).json(user);
+    return res.status(HTTP_STATUS_CODE.OK).json({ data: user, error: DB_STATUS_CODE.OK });
   } catch (error) {
-    winston.error(error.stack);
     return next(error);
   };
 };
@@ -42,7 +40,6 @@ const setUser = async (req, res, next) => {
     });
     return res.status(HTTP_STATUS_CODE.CREATED).json({ error: DB_STATUS_CODE.OK });
   } catch (error) {
-    winston.error(error.stack);
     return next(error);
   };
 
