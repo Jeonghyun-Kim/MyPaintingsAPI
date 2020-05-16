@@ -44,7 +44,11 @@ app.use(flash());
 app.use('/', Router);
 
 app.all('*', (req, res, next) => {
+<<<<<<< HEAD
   const err = new Error('404 Not Found');
+=======
+  cosnt err = new Error('404 Not Found');
+>>>>>>> 3bd719d4e7b06a5dea683e0173fe8f0bafacfbec
   err.status = 404;
   next(err);
 });
