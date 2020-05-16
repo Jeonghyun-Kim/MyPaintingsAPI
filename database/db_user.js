@@ -24,8 +24,8 @@ const getUser = async (req, res, next) => {
 const setUser = async (req, res, next) => {
   winston.info('setUser called!');
   const { username, name, level, email, password,
-    ishashed, gender, num_fans, profile_pic_src, profile_msg } = req.body;
-  const hashedPassword = ishashed
+    isHashed, gender, num_fans, profile_pic_src, profile_msg } = req.body;
+  const hashedPassword = isHashed
   ? password
   : crypto.createHash('sha256').update(password).digest('base64');
   try {
