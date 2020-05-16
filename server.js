@@ -44,13 +44,12 @@ app.use(flash());
 app.use('/', Router);
 
 app.all('*', (req, res, next) => {
-  const err = new Error('404 Not Found');
-  err.status = 404;
-  next(err);
+  const error = new Error('404 Not Found');
+  error.status = 404;
+  return next(error);
 });
 
 app.use((err, req, res) => {
-  winston.err(err.statck);
   res.locals.message = err.message;
   res.locals.error = res.app.get('env') === 'development' ? err : {};
   res.status(err.status || 500);
