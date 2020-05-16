@@ -44,7 +44,9 @@ app.use(flash());
 app.use('/', Router);
 
 app.all('*', (req, res, next) => {
-  res.status(404).send('404 Page Not Found.');
+  const err = new Error('404 Not Found');
+  err.status = 404;
+  next(err);
 });
 
 app.use((err, req, res) => {
