@@ -27,7 +27,7 @@ router.use((req, res, next) => {
 
 router.route('/')
   .get((req, res, next) => {
-    res.status(HTTP_STATUS_CODE.OK).json({ error: DB_STATUS_CODE.OK, version: version });
+    res.status(HTTP_STATUS_CODE.OK).json({ version: version, error: DB_STATUS_CODE.OK });
   }
 );
 
