@@ -6,6 +6,7 @@ const jsonParser = require('body-parser').json();
 const { HTTP_STATUS_CODE, DB_STATUS_CODE } = require('../status_code');
 const winston = require('../winston_config');
 const { getUser, setUser } = require('../database/db_user');
+const { getPainting, setPainting } = require('../database/db_painting');
 
 // const React = require('react');
 // require('babel-register')({
@@ -27,5 +28,9 @@ router.route('/')
 router.route('/user')
   .get(getUser)
   .post(setUser)
+
+router.route('/painting')
+  .get(getPainting)
+  .post(setPainting)
 
 module.exports = router;
