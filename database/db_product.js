@@ -15,14 +15,14 @@ const getProduct = async (req, res, next) => {
     return next(error);
   }
   try {
-    const data = await Product.findOne({
+    const product = await Product.findOne({
       attributes: ['name', 'image_src', 'content', 'price', 'on_sale', 'num_like', 'view', 'paintintId'],
       where: { id: id }
     });
-    if (data === null) {
+    if (product === null) {
       return res.status(HTTP_STATUS_CODE.BAD_REQUEST).json({ error: DB_STATUS_CODE.NO_SUCH_PRODUCT });
     }
-    return res.status(HTTP_STATUS_CODE.OK).json({ data: data, error: DB_STATUS_CODE.OK });
+    return res.status(HTTP_STATUS_CODE.OK).json({ data: product, error: DB_STATUS_CODE.OK });
   } catch (error) {
     winston.error(`getProductError: ${error}`);
     return next(error);

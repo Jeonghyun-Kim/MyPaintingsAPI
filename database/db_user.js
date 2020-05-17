@@ -7,7 +7,7 @@ const { HTTP_STATUS_CODE, DB_STATUS_CODE } = require('../status_code');
 
 const getUser = async (req, res, next) => {
   winston.info('getUser called!');
-  const { username } = req.body;
+  const { username, withPaintings } = req.body;
   if (username === undefined || username === null) {
     const error = new Error('400 Bad Request');
     error.status = HTTP_STATUS_CODE.BAD_REQUEST;
@@ -15,17 +15,18 @@ const getUser = async (req, res, next) => {
     return next(error);
   };
   try {
-    let withPaintings = false, paintings = null;
-    withPaintings = req.body.withPaintings;
     const user = await User.findOne({
       attributes: ['id', 'username', 'name', 'level', 'num_fans', 'profile_pic_src', 'profile_msg'],
       where: { username: username }
     });
+    if (user == null) {
+      return res.status(HTTP_STATUS_CODE.BAD_REQUEST).json({ error: DB_STATUS_CODE.NO_SUCH_USER });
+    };
     if (withPaintings) {
       const paintings = await user.getPaintings();
-      return res.status(HTTP_STATUS_CODE.OK).json({ data: user, paintings: paintings, error: DB_STATUS_CODE.OK })
+      return res.status(HTTP_STATUS_CODE.OK).json({ user, paintings, error: DB_STATUS_CODE.OK })
     } else {
-      return res.status(HTTP_STATUS_CODE.OK).json({ data: user, error: DB_STATUS_CODE.OK });
+      return res.status(HTTP_STATUS_CODE.OK).json({ user, error: DB_STATUS_CODE.OK });
     };
   } catch (error) {
     winston.error(`getUserError: ${error}`);
