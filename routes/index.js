@@ -14,21 +14,20 @@ const version = '0.0.1';
 router.use(jsonParser);
 
 router.route('/')
-  .get((req, res, next) => {
-    res.status(HTTP_STATUS_CODE.OK).json({ version: version, error: DB_STATUS_CODE.OK });
-  }
-);
+.get((req, res, next) => {
+  res.status(HTTP_STATUS_CODE.OK).json({ version: version, error: DB_STATUS_CODE.OK });
+});
 
 router.route('/user')
-  .get(getUser)
-  .post(setUser)
+.get(getUser)
+.post(setUser)
 
 router.route('/painting')
-  .get(getPainting)
-  .post(setPainting)
+.get(getPainting)
+.post(setPainting)
 
 router.route('/product')
-  .get(getProduct)
-  .post(setProduct)
+.get(getProduct)
+.post(setProduct)
 
 module.exports = router;
