@@ -9,13 +9,6 @@ const { getUser, setUser } = require('../database/db_user');
 const { getPainting, setPainting } = require('../database/db_painting');
 const { getProduct, setProduct } = require('../database/db_product');
 
-// const React = require('react');
-// require('babel-register')({
-//   presets: [ 'react' ]
-// });
-// const ReactDomServer = require('react-dom/server');
-// const About = require('../components/about');
-
 const version = '0.0.1';
 
 router.use(jsonParser);
