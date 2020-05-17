@@ -13,7 +13,7 @@ const getPainting = async (req, res, next) => {
     error.status = HTTP_STATUS_CODE.BAD_REQUEST;
     winston.error(`getPaintingError: ${error}`);
     return next(error);
-  }
+  };
   try {
     const painting = await Painting.findOne({
       attributes: ['id', 'name', 'image_src', 'content', 'num_like', 'view', 'userId'],
