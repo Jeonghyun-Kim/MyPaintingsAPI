@@ -6,7 +6,7 @@ const jsonParser = require('body-parser').json();
 const { HTTP_STATUS_CODE, DB_STATUS_CODE } = require('../status_code');
 const winston = require('../winston_config');
 const { getUser, setUser } = require('../database/db_user');
-const { getPainting, setPainting } = require('../database/db_painting');
+const { getPainting, setPainting, getAll } = require('../database/db_painting');
 const { getProduct, setProduct } = require('../database/db_product');
 
 const version = '0.0.1';
@@ -29,5 +29,8 @@ router.route('/painting')
 router.route('/product')
 .get(getProduct)
 .post(setProduct)
+
+router.route('/fetchall')
+.get(getAll)
 
 module.exports = router;
