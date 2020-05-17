@@ -15,11 +15,18 @@ const getUser = async (req, res, next) => {
     return next(error);
   };
   try {
+    let withPaintings = false, paintings = null;
+    withPaintings = req.body.withPaintings;
     const user = await User.findOne({
-      attributes: ['username', 'name', 'level', 'num_fans', 'profile_pic_src', 'profile_msg'],
+      attributes: ['id', 'username', 'name', 'level', 'num_fans', 'profile_pic_src', 'profile_msg'],
       where: { username: username }
     });
-    return res.status(HTTP_STATUS_CODE.OK).json({ data: user, error: DB_STATUS_CODE.OK });
+    if (withPaintings) {
+      const paintings = await user.getPaintings();
+      return res.status(HTTP_STATUS_CODE.OK).json({ data: user, paintings: paintings, error: DB_STATUS_CODE.OK })
+    } else {
+      return res.status(HTTP_STATUS_CODE.OK).json({ data: user, error: DB_STATUS_CODE.OK });
+    };
   } catch (error) {
     winston.error(`getUserError: ${error}`);
     return next(error);
