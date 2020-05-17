@@ -7,8 +7,8 @@ const { HTTP_STATUS_CODE, DB_STATUS_CODE } = require('../status_code');
 
 const getUser = async (req, res, next) => {
   winston.info('getUser called!');
-  const { username, withPaintings } = req.body;
-  if (username === undefined || username === null) {
+  const { id, withPaintings } = req.body;
+  if (id === undefined || id === null) {
     const error = new Error('400 Bad Request');
     error.status = HTTP_STATUS_CODE.BAD_REQUEST;
     winston.error(`getUserError: ${error}`);
@@ -17,7 +17,7 @@ const getUser = async (req, res, next) => {
   try {
     const user = await User.findOne({
       attributes: ['id', 'username', 'name', 'level', 'num_fans', 'profile_pic_src', 'profile_msg'],
-      where: { username: username }
+      where: { id }
     });
     if (user == null) {
       return res.status(HTTP_STATUS_CODE.BAD_REQUEST).json({ error: DB_STATUS_CODE.NO_SUCH_USER });
