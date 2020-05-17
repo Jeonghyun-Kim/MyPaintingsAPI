@@ -11,7 +11,7 @@ const getPainting = async (req, res, next) => {
   if (id === undefined || id === null) {
     const error = new Error('400 Bad Request');
     error.status = HTTP_STATUS_CODE.BAD_REQUEST;
-    winston.error(`getPAintingError: ${error}`);
+    winston.error(`getPaintingError: ${error}`);
     return next(error);
   }
   try {
@@ -45,7 +45,7 @@ const setPainting = async (req, res, next) => {
     });
     return res.status(HTTP_STATUS_CODE.CREATED).json({ error: DB_STATUS_CODE.OK });
   } catch (error) {
-    winston.error(`setUserError: ${error}`);
+    winston.error(`setPaintingError: ${error}`);
 
     return next(error);
   };
