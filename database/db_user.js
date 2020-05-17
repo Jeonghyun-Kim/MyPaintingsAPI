@@ -11,13 +11,13 @@ const getUser = async (req, res, next) => {
   if (username === undefined || username === null) {
     const error = new Error('400 Bad Request');
     error.status = HTTP_STATUS_CODE.BAD_REQUEST;
-    winston.error(`getUserError: ${error}`)
+    winston.error(`getUserError: ${error}`);
     return next(error);
-  }
+  };
   try {
     const user = await User.findOne({
       attributes: ['username', 'name', 'level', 'num_fans', 'profile_pic_src', 'profile_msg'],
-      where: { username: req.body.username }
+      where: { username: username }
     });
     return res.status(HTTP_STATUS_CODE.OK).json({ data: user, error: DB_STATUS_CODE.OK });
   } catch (error) {
@@ -34,6 +34,12 @@ const setUser = async (req, res, next) => {
   ? password
   : crypto.createHash('sha256').update(password).digest('base64');
   try {
+    if (await User.findOne({ where: { username: username } })) {
+      return res.status(HTTP_STATUS_CODE.BAD_REQUEST).json({ error: DB_STATUS_CODE.USERNAME_ALREADY_OCCUPIED });
+    };
+    if (await User.findOne({ where: { email: email } })) {
+      return res.status(HTTP_STATUS_CODE.BAD_REQUEST).json({ error: DB_STATUS_CODE.EMAIL_ALREADY_OCCUPIED });
+    };
     await User.create({
       username,
       name,
@@ -50,7 +56,6 @@ const setUser = async (req, res, next) => {
     winston.error(`setUserError: ${error}`);
     return next(error);
   };
-
 };
 
 module.exports = {
