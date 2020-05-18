@@ -3,20 +3,20 @@ const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const path = require('path');
 const session = require('express-session');
-const flash = require('connect-flash');
 const winston = require('./winston_config');
-// const passport = require('passport');
+const passport = require('passport');
 require('dotenv').config();
 
 const { sequelize } = require('./models');
-// const passportConfig = require('./passport');
+const passportConfig = require('./passport');
 
-const Router = require('./routes/index');
+const Router = require('./routes');
+const authRouter = require('./routes/auth');
 
 const app = express();
 
 sequelize.sync();
-// passportConfig(passport);
+passportConfig(passport);
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -36,11 +36,11 @@ app.use(session({
     secure: false
   }
 }));
-app.use(flash());
-// app.use(passport.initialize());
-// app.use(passport.sessiong());
 
-// app.use('/auth', authRouter);
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use('/auth', authRouter);
 app.use('/', Router);
 
 app.all('*', (req, res, next) => {

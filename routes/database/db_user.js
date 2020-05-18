@@ -1,9 +1,9 @@
 "use strict";
 
 const crypto = require('crypto');
-const { User } = require('../models');
-const winston = require('../winston_config');
-const { HTTP_STATUS_CODE, DB_STATUS_CODE } = require('../status_code');
+const { User } = require('../../models');
+const winston = require('../../winston_config');
+const { HTTP_STATUS_CODE, DB_STATUS_CODE } = require('../../status_code');
 
 const getUser = async (req, res, next) => {
   try {

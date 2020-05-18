@@ -1,9 +1,9 @@
 "use strict";
 
 const crypto = require('crypto');
-const { Painting, Product } = require('../models');
-const winston = require('../winston_config');
-const { HTTP_STATUS_CODE, DB_STATUS_CODE } = require('../status_code');
+const { Painting, Product } = require('../../models');
+const winston = require('../../winston_config');
+const { HTTP_STATUS_CODE, DB_STATUS_CODE } = require('../../status_code');
 
 const getProduct = async (req, res, next) => {
   winston.info('getProduct called!');
