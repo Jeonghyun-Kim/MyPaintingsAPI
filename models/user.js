@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: true,
       validate: {
-        is: /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/i
+        is: /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{3,29}$/i
       }
     },
     name: {

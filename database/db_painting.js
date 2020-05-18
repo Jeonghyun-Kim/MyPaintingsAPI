@@ -7,28 +7,37 @@ const { HTTP_STATUS_CODE, DB_STATUS_CODE } = require('../status_code');
 
 const getPainting = async (req, res, next) => {
   winston.info('getPainting called!');
-  const { id, withProducts } = req.body;
-  if (id === undefined || id === null) {
-    const error = new Error('400 Bad Request');
-    error.status = HTTP_STATUS_CODE.BAD_REQUEST;
-    winston.error(`getPaintingError: ${error}`);
-    return next(error);
-  };
   try {
     const painting = await Painting.findOne({
       attributes: ['id', 'name', 'image_src', 'content', 'num_like', 'view', 'userId'],
-      where: { id: id }
+      where: { id: req.params.id }
     });
     if (painting == null) {
-      return res.status(HTTP_STATUS_CODE.BAD_REQUEST).json({ error: DB_STATUS_CODE.NO_SUCH_PAINTING });
+      res.status(HTTP_STATUS_CODE.BAD_REQUEST).json({ error: DB_STATUS_CODE.NO_SUCH_PAINTING });
+    } else {
+      res.status(HTTP_STATUS_CODE.OK).json({ painting, error: DB_STATUS_CODE.OK });
     };
-    if (withProducts) {
-      const products = await painting.getProducts();
-      return res.status(HTTP_STATUS_CODE.OK).json({ painting, products, error: DB_STATUS_CODE.OK });
-    };
-    return res.status(HTTP_STATUS_CODE.OK).json({ painting, error: DB_STATUS_CODE.OK });
   } catch (error) {
     winston.error(`getPaintingError: ${error}`);
+    return next(error);
+  };
+};
+
+const getPaintingProducts = async (req, res, next) => {
+  winston.info('getPaintingProducts called!');
+  try {
+    const painting = await Painting.findOne({
+      attributes: ['id', 'name', 'image_src', 'content', 'num_like', 'view', 'userId'],
+      where: { id: req.params.id }
+    });
+    if (painting == null) {
+      res.status(HTTP_STATUS_CODE.BAD_REQUEST).json({ error: DB_STATUS_CODE.NO_SUCH_PAINTING });
+    } else {
+      const products = await painting.getProducts();
+      res.status(HTTP_STATUS_CODE.OK).json({ painting, products, error: DB_STATUS_CODE.OK });
+    };
+  } catch (error) {
+    winston.error(`getPaintingProductsError: ${error}`);
     return next(error);
   };
 };
@@ -67,6 +76,7 @@ const getAll = async (req, res, next) => {
 
 module.exports = {
   getPainting,
+  getPaintingProducts,
   setPainting,
   getAll
 };

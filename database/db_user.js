@@ -6,30 +6,38 @@ const winston = require('../winston_config');
 const { HTTP_STATUS_CODE, DB_STATUS_CODE } = require('../status_code');
 
 const getUser = async (req, res, next) => {
-  winston.info('getUser called!');
-  const { id, withPaintings } = req.body;
-  if (id === undefined || id === null) {
-    const error = new Error('400 Bad Request');
-    error.status = HTTP_STATUS_CODE.BAD_REQUEST;
-    winston.error(`getUserError: ${error}`);
-    return next(error);
-  };
   try {
+    winston.info('getUser called!')
     const user = await User.findOne({
-      attributes: ['id', 'username', 'name', 'level', 'num_fans', 'profile_pic_src', 'profile_msg'],
-      where: { id }
+      attributes: ['id', 'username', 'name'],
+      where: { id: req.params.id }
     });
     if (user == null) {
-      return res.status(HTTP_STATUS_CODE.BAD_REQUEST).json({ error: DB_STATUS_CODE.NO_SUCH_USER });
-    };
-    if (withPaintings) {
-      const paintings = await user.getPaintings();
-      return res.status(HTTP_STATUS_CODE.OK).json({ user, paintings, error: DB_STATUS_CODE.OK })
+      res.status(HTTP_STATUS_CODE.BAD_REQUEST).json({ error: DB_STATUS_CODE.NO_SUCH_USER });
     } else {
-      return res.status(HTTP_STATUS_CODE.OK).json({ user, error: DB_STATUS_CODE.OK });
+      res.status(HTTP_STATUS_CODE.OK).json({ user, error: DB_STATUS_CODE.OK });
     };
   } catch (error) {
     winston.error(`getUserError: ${error}`);
+    return next(error);
+  };
+};
+
+const getUserPaintings = async (req, res, next) => {
+  try {
+    winston.info('getUserPaintings called!')
+    const user = await User.findOne({
+      attributes: ['id', 'username', 'name', 'level', 'num_fans', 'profile_pic_src', 'profile_msg'],
+      where: { id: req.params.id }
+    });
+    if (user == null) {
+      res.status(HTTP_STATUS_CODE.BAD_REQUEST).json({ error: DB_STATUS_CODE.NO_SUCH_USER });
+    } else {
+      const paintings = await user.getPaintings();
+      res.status(HTTP_STATUS_CODE.OK).json({ user, paintings, error: DB_STATUS_CODE.OK });
+    };
+  } catch (error) {
+    winston.error(`getUserPaintingsError: ${error}`);
     return next(error);
   };
 };
@@ -67,5 +75,6 @@ const setUser = async (req, res, next) => {
 
 module.exports = {
   getUser,
+  getUserPaintings,
   setUser
 };
