@@ -26,7 +26,7 @@ router.get('/painting/:id', verifyToken, getPainting);
 router.get('/painting/:id/products', verifyToken, getPaintingProducts);
 router.post('/painting', verifyToken, setPainting);
 
-router.get('/paintings', verifyAdmin, getAll);
+router.get('/paintings', verifyToken, getAll);
 
 router.get('/product:id', verifyToken, getProduct);
 router.post('/product', verifyToken, setProduct);

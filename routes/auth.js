@@ -7,7 +7,7 @@ const router = express.Router();
 const jsonParser = require('body-parser').json();
 const { HTTP_STATUS_CODE, DB_STATUS_CODE } = require('../status_code');
 const winston = require('../winston_config');
-const { checkLoggedIn, checkNotLoggedIn, verifyToken } = require('./middlewares');
+const { verifyToken } = require('./middlewares');
 const { User } = require('../models');
 
 const version = '0.0.1';
