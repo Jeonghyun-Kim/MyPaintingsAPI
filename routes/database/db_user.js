@@ -1,6 +1,6 @@
 "use strict";
 
-const crypto = require('crypto');
+const sha256 = require('sha256');
 const { User } = require('../../models');
 const winston = require('../../winston_config');
 const { HTTP_STATUS_CODE, DB_STATUS_CODE } = require('../../status_code');
@@ -48,7 +48,7 @@ const setUser = async (req, res, next) => {
     isHashed, gender, profile_pic_src, profile_msg } = req.body;
   const hashedPassword = isHashed
   ? password
-  : crypto.createHash('sha256').update(password).digest('base64');
+  : sha256(password);
   try {
     if (await User.findOne({ where: { username: username } })) {
       return res.status(HTTP_STATUS_CODE.BAD_REQUEST).json({ error: DB_STATUS_CODE.USERNAME_ALREADY_OCCUPIED });
