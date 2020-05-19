@@ -19,13 +19,11 @@ router.use(jsonParser);
 router.post('/join', async (req, res, next) => {
   const { username, name, email, password, gender } = req.body;
   try {
-    let exUser = await User.findOne({ where: { username } });
-    if (exUser) {
+    if (await User.findOne({ where: { username } })) {
       return res.status(HTTP_STATUS_CODE.NO_CONTENT)
       .json({ error: DB_STATUS_CODE.USERNAME_ALREADY_OCCUPIED });
     };
-    exUser = await User.findOne({ where: { email } });
-    if (exUser) {
+    if (await User.findOne({ where: { email } })) {
       return res.status(HTTP_STATUS_CODE.NO_CONTENT)
       .json({ error: DB_STATUS_CODE.EMAIL_ALREADY_OCCUPIED });
     };
