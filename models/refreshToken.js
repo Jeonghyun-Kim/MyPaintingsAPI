@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define('refreshToken', {
-    refresh_token: {
-      type: DataTypes.STRING(30),
+    value: {
+      type: DataTypes.STRING(64),
       allowNull: false
     }
   }, {

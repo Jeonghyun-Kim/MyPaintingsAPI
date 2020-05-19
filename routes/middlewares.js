@@ -1,10 +1,12 @@
 "use strict";
 
 const jwt = require('jsonwebtoken');
+const winston = require('../winston_config');
 const { HTTP_STATUS_CODE, DB_STATUS_CODE } = require('../status_code');
 const { User } = require('../models');
 
 const verifyToken = (req, res, next) => {
+  winston.info(`req.header: ${req.headers.authorization}`);
   try {
     req.decoded = jwt.verify(req.headers.authorization, process.env.JWT_SECRET);
     return next();
@@ -19,7 +21,7 @@ const verifyToken = (req, res, next) => {
 const verifyAdmin = async (req, res, next) => {
   try {
     req.decoded = jwt.verify(req.headers.authorization, process.env.JWT_SECRET);
-    userLevel = await User.findOne({ attributes: ['level'], where: { username: req.decoded.username  } })
+    userLevel = (await User.findOne({ attributes: ['level'], where: { username: req.decoded.username  } })).level;
     if (userLevel < 99) {
       return res.status(HTTP_STATUS_CODE.UNAUTHORIZED).json({ error: DB_STATUS_CODE.NO_PERMISSION });
     }

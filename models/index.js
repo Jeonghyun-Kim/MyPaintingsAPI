@@ -17,7 +17,7 @@ db.RefreshToken = require('./refreshToken')(sequelize, Sequelize);
 
 db.User.hasMany(db.Painting);
 
-db.User.hasMany(db.RefreshToken);
+db.User.hasOne(db.RefreshToken);
 
 db.User.belongsToMany(db.Painting, { through: 'PaintingLike', foreignKey: 'userId' });
 db.Painting.belongsToMany(db.User, { through: 'PaintingLike', foreignKey: 'paintingId' });

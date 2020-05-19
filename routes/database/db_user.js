@@ -1,7 +1,9 @@
 "use strict";
 
 const sha256 = require('sha256');
-const { User } = require('../../models');
+const jwt = require('jsonwebtoken');
+const uuidv4 = require('uuid-v4')
+const { User, RefreshToken } = require('../../models');
 const winston = require('../../winston_config');
 const { HTTP_STATUS_CODE, DB_STATUS_CODE } = require('../../status_code');
 
@@ -56,7 +58,7 @@ const setUser = async (req, res, next) => {
     if (await User.findOne({ where: { email: email } })) {
       return res.status(HTTP_STATUS_CODE.BAD_REQUEST).json({ error: DB_STATUS_CODE.EMAIL_ALREADY_OCCUPIED });
     };
-    await User.create({
+    const user = await User.create({
       username,
       name,
       level,
@@ -66,7 +68,18 @@ const setUser = async (req, res, next) => {
       profile_pic_src,
       profile_msg
     });
-    return res.status(HTTP_STATUS_CODE.CREATED).json({ error: DB_STATUS_CODE.OK });
+    const token = jwt.sign({
+      username: user.username
+    }, process.env.JWT_SECRET, {
+      expiresIn: '1h'
+    });
+    const refresh_token = sha256(uuidv4());
+    await RefreshToken.create({ value: refresh_token, userId: user.id });
+
+    winston.info(`TOKEN: ${token}`);
+    winston.info(`RTOKEN: ${refresh_token}`);
+
+    return res.status(HTTP_STATUS_CODE.CREATED).json({ token, refresh_token, error: DB_STATUS_CODE.OK });
   } catch (error) {
     winston.error(`setUserError: ${error}`);
     return next(error);

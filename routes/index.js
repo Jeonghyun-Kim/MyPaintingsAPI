@@ -20,7 +20,7 @@ router.get('/', (req, res, next) => {
 
 router.get('/user/:id', verifyToken, getUser);
 router.get('/user/:id/paintings', verifyToken, getUserPaintings);
-router.post('/user', verifyAdmin, setUser);
+router.post('/user', setUser);
 
 router.get('/painting/:id', verifyToken, getPainting);
 router.get('/painting/:id/products', verifyToken, getPaintingProducts);
