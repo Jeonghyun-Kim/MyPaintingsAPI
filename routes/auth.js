@@ -90,7 +90,7 @@ router.post('/token', async (req, res) => {
   };
   try {
     req.decoded = jwt.verify(req.headers.authorization, process.env.JWT_SECRET);
-    const user = await User.findOne({ attributes: ['id'], where: { username: req.decoded.username } });
+    const user = await User.findOne({ attributes: ['id', 'username'], where: { username: req.decoded.username } });
     const _refresh_token = (await user.getRefreshToken()).value;
     if (refresh_token != _refresh_token) {
       return res.status(HTTP_STATUS_CODE.UNAUTHORIZED).json({ error: DB_STATUS_CODE.INVALID_REFRESH_TOKEN });
@@ -103,7 +103,7 @@ router.post('/token', async (req, res) => {
     return res.status(HTTP_STATUS_CODE.OK).json({ token, erroor: DB_STATUS_CODE.OK });
   } catch (error) {
     if (error.name === 'TokenExpiredError') {
-      const user = await User.findOne({ attributes: ['id'], where: { username: req.decoded.username } });
+      const user = await User.findOne({ attributes: ['id', 'username'], where: { username: jwt.decode(req.headers.authorization).username } });
       const _refresh_token = (await user.getRefreshToken()).value;
       if (refresh_token != _refresh_token) {
         return res.status(HTTP_STATUS_CODE.UNAUTHORIZED).json({ error: DB_STATUS_CODE.INVALID_REFRESH_TOKEN });
