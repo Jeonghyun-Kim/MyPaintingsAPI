@@ -13,15 +13,16 @@ db.Sequelize = Sequelize;
 db.User = require('./user')(sequelize, Sequelize);
 db.Painting = require('./painting')(sequelize, Sequelize);
 db.Product = require('./product')(sequelize, Sequelize);
+db.RefreshToken = require('./refreshToken')(sequelize, Sequelize);
 
 db.User.hasMany(db.Painting);
-db.Painting.belongsTo(db.User);
+
+db.User.hasMany(db.RefreshToken);
 
 db.User.belongsToMany(db.Painting, { through: 'PaintingLike', foreignKey: 'userId' });
 db.Painting.belongsToMany(db.User, { through: 'PaintingLike', foreignKey: 'paintingId' });
 
 db.Painting.hasMany(db.Product);
-db.Product.belongsTo(db.Painting);
 
 db.User.belongsToMany(db.User, {
   foreignKey: 'followingId',
