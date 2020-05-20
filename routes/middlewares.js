@@ -6,7 +6,6 @@ const { HTTP_STATUS_CODE, DB_STATUS_CODE } = require('../status_code');
 const { User } = require('../models');
 
 const verifyToken = (req, res, next) => {
-  winston.info(`req.header: ${req.headers.authorization}`);
   try {
     req.decoded = jwt.verify(req.headers.authorization, process.env.JWT_SECRET);
     return next();

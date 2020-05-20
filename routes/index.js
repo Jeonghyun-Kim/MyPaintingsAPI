@@ -5,7 +5,7 @@ const router = express.Router();
 const jsonParser = require('body-parser').json();
 const { HTTP_STATUS_CODE, DB_STATUS_CODE } = require('../status_code');
 const winston = require('../winston_config');
-const { getUser, getUserPaintings, setUser } = require('./database/db_user');
+const { getUser, getUserPaintings, setUser, getMyInfo } = require('./database/db_user');
 const { getPainting, getPaintingProducts, setPainting, getAll } = require('./database/db_painting');
 const { getProduct, setProduct } = require('./database/db_product');
 const { verifyToken, verifyAdmin } = require('./middlewares');
@@ -21,6 +21,7 @@ router.get('/', (req, res, next) => {
 router.get('/user/:id', verifyToken, getUser);
 router.get('/user/:id/paintings', verifyToken, getUserPaintings);
 router.post('/user', setUser);
+router.get('/my', verifyToken, getMyInfo);
 
 router.get('/painting/:id', verifyToken, getPainting);
 router.get('/painting/:id/products', verifyToken, getPaintingProducts);

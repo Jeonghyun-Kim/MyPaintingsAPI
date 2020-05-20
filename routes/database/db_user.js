@@ -3,9 +3,25 @@
 const sha256 = require('sha256');
 const jwt = require('jsonwebtoken');
 const uuidv4 = require('uuid-v4')
-const { User, RefreshToken } = require('../../models');
+const { User, Painting, RefreshToken } = require('../../models');
 const winston = require('../../winston_config');
 const { HTTP_STATUS_CODE, DB_STATUS_CODE } = require('../../status_code');
+
+
+const getMyInfo = async (req, res, next) => {
+  try {
+    winston.info(`getMyInfo called!`);
+    const user = await User.findOne({ where: { username: req.decoded.username } });
+    if (user == null) {
+      return res.status(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR).json({ error: DB_STATUS_CODE.COMMON_ERROR });
+    };
+    const paintings = await user.getPaintings();
+    return res.status(HTTP_STATUS_CODE.OK).json({ user, paintings, error: DB_STATUS_CODE.OK });
+  } catch {
+    winston.error(`getMyInfoError: ${error}`);
+    return next(error);
+  }
+};
 
 const getUser = async (req, res, next) => {
   try {
@@ -15,10 +31,9 @@ const getUser = async (req, res, next) => {
       where: { id: req.params.id }
     });
     if (user == null) {
-      res.status(HTTP_STATUS_CODE.BAD_REQUEST).json({ error: DB_STATUS_CODE.NO_SUCH_USER });
-    } else {
-      res.status(HTTP_STATUS_CODE.OK).json({ user, error: DB_STATUS_CODE.OK });
+      return res.status(HTTP_STATUS_CODE.BAD_REQUEST).json({ error: DB_STATUS_CODE.NO_SUCH_USER });
     };
+    return res.status(HTTP_STATUS_CODE.OK).json({ user, error: DB_STATUS_CODE.OK });
   } catch (error) {
     winston.error(`getUserError: ${error}`);
     return next(error);
@@ -87,6 +102,7 @@ const setUser = async (req, res, next) => {
 };
 
 module.exports = {
+  getMyInfo,
   getUser,
   getUserPaintings,
   setUser
