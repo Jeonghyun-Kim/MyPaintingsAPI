@@ -12,8 +12,6 @@ const winston = require('../winston_config');
 const { verifyToken } = require('./middlewares');
 const { User, RefreshToken } = require('../models');
 
-const version = '0.0.1';
-
 router.use(jsonParser);
 
 router.post('/join', async (req, res, next) => {
