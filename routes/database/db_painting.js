@@ -44,9 +44,9 @@ const getPaintingProducts = async (req, res, next) => {
 
 const setPainting = async (req, res, next) => {
   winston.info('setPainting called!');
-  const { username, name, image_src, content } = req.body;
+  const { name, image_src, content } = req.body;
   try {
-    const user = await User.findOne({ where: { username: username } });
+    const user = await User.findOne({ where: { username: req.decoded.username } });
     if (user == null) {
       return res.status(HTTP_STATUS_CODE.BAD_REQUEST).json({ error: DB_STATUS_CODE.NO_SUCH_USER });
     };
