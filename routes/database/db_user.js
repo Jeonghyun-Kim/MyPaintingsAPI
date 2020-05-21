@@ -20,7 +20,7 @@ const getMyInfo = async (req, res, next) => {
   } catch {
     winston.error(`getMyInfoError: ${error}`);
     return next(error);
-  }
+  };
 };
 
 const getUser = async (req, res, next) => {
