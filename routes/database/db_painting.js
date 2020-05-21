@@ -66,8 +66,8 @@ const setPainting = async (req, res, next) => {
 const getAll = async (req, res, next) => {
   winston.info('getAll called!');
   try {
-    const data = await Painting.findAll({});
-    return res.status(HTTP_STATUS_CODE.OK).json({ data, error: DB_STATUS_CODE.OK });
+    const paintings = await Painting.findAll({});
+    return res.status(HTTP_STATUS_CODE.OK).json({ paintings, error: DB_STATUS_CODE.OK });
   } catch (error) {
     winston.error(`getAllError: ${error}`);
     return next(error);
