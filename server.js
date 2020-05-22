@@ -51,7 +51,7 @@ app.all('*', (req, res, next) => {
 
 app.use((err, req, res) => {
   res.locals.message = err.message;
-  res.locals.error = res.app.get('env') === 'development' ? err : {};
+  res.locals.error = app.get('env') === 'development' ? err : {};
   res.status(err.status || 500);
   res.render('error');
 });
